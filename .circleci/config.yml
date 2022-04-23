@@ -28,10 +28,12 @@ jobs:
     machine: true
     steps:
       - run:
-          name: Build and push Docker image to Heroku
-          command: docker login --username=$HEROKU_LOGIN --password=$HEROKU_TOKEN registry.heroku.com 
-            docker tag shantanu2307/devops_app registry.heroku.com/salary-predictor-nsut/web
-            docker push registry.heroku.com/salary-predictor-nsut/web
+          name: Build for Heroku
+          staging:
+          command:
+            - docker login --email=$HEROKU_LOGIN --username=$HEROKU_LOGIN --password=$HEROKU_TOKEN registry.heroku.com
+            - docker build --rm=false -t registry.heroku.com/salary-predictor-nsut/web .
+            - docker push registry.heroku.com/salary-predictor-nsut/web:latest
       - run :
           name: Deploy to Heroku
           command: heroku container:release web -a salary-predictor-nsut
