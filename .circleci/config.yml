@@ -1,19 +1,17 @@
 version: 2
 
 workflows:
-  heroku_deploy:
+  version: 2
+  build-and-deploy:
     jobs:
-        deploy-dev:
-          machine: true
-          steps:
-           - build
-            - run:
-            name: Build and push Docker image to Heroku
-            command: |
-              sudo curl https://cli-assets.heroku.com/install.sh | sh
-              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
-              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a salary-predictor-nsut web
-              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a salary-predictor-nsut web
+      - build
+      - deploy-dev:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+        
 
 jobs:
  build:
@@ -26,3 +24,13 @@ jobs:
 
      # build the application image
      - run: TAG="0.1.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}" && docker build -t shantanu2307/devops_app:$TAG . && docker push shantanu2307/devops_app:$TAG
+ deploy-dev:
+    machine: true
+    steps:
+      - run:
+          name: Build and push Docker image to Heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh 
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a salary-predictor-nsut web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a salary-predictor-nsut web
