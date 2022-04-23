@@ -32,10 +32,6 @@ jobs:
     steps:
       - setup_remote_docker:
           version: 19.03.13
-          image: shantanu2307/devops_app:$TAG
-          registry: shantanu2307
-          registry_username: shantanu2307
-          registry_password: $DOCKER_PASS
       - checkout
       - run: docker build .
       - heroku/install
