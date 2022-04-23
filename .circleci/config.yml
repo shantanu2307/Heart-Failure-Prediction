@@ -3,6 +3,8 @@ version: 2.1
 orbs:
   heroku: circleci/heroku@1.2.6
 
+docker_layer_caching: true
+
 workflows:
   version: 2
   heroku_deploy:
@@ -19,7 +21,6 @@ workflows:
 jobs:
  build:
    machine: true
-   docker_layer_caching: true
    steps:
      - checkout
      - run: |
