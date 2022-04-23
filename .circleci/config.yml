@@ -29,8 +29,9 @@ jobs:
     steps:
       - run:
           name: Build and push Docker image to Heroku
-          command: |
-            sudo curl https://cli-assets.heroku.com/install.sh | sh 
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a devops_app web
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a devops_app web
+          command:
+          docker login --username=$HEROKU_EMAIL 
+          --password=$HEROKU_API_KEY registry.heroku.com
+          docker tag shantanu2307/devops_app registry.heroku.com/salary-predictor-nsut/web
+          docker push registry.heroku.com/salary-predictor-nsut/web
+          heroku container:release web -a salary-predictor-nsut
