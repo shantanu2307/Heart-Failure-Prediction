@@ -32,5 +32,5 @@ jobs:
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh 
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a salary-predictor-nsut web
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a salary-predictor-nsut web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a devops_app web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a devops_app web
