@@ -1,5 +1,8 @@
 version: 2
 
+orbs:
+  heroku: circleci/heroku@1.2.6
+
 workflows:
   version: 2
   build-and-deploy:
@@ -27,13 +30,19 @@ jobs:
  deploy-dev:
     machine: true
     steps:
-      - run:
-          name: Build for Heroku
-          staging:
-          command:
-            - docker login --email=$HEROKU_LOGIN --username=$HEROKU_LOGIN --password=$HEROKU_TOKEN registry.heroku.com
-            - docker build --rm=false -t registry.heroku.com/salary-predictor-nsut/web .
-            - docker push registry.heroku.com/salary-predictor-nsut/web:latest
-      - run :
-          name: Deploy to Heroku
-          command: heroku container:release web -a salary-predictor-nsut
+      - setup_remote_docker:
+          version: 19.03.13
+          image: shantanu2307/devops_app:$TAG
+          registry: shantanu2307
+          registry_username: shantanu2307
+          registry_password: $DOCKER_PASS
+      - checkout
+      - run: docker build .
+      - heroku/install
+      - run: heroku container:login
+      - heroku/push-docker-image:
+          process-types: web
+      - heroku/release-docker-image:
+          process-types: web
+
+
