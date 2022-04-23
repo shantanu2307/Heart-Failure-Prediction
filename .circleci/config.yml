@@ -29,8 +29,7 @@ jobs:
     steps:
       - run:
           name: Build and push Docker image to Heroku
-          command:
-          docker login --username=$HEROKU_EMAIL 
+          command: docker login --username=$HEROKU_EMAIL 
           --password=$HEROKU_API_KEY registry.heroku.com
           docker tag shantanu2307/devops_app registry.heroku.com/salary-predictor-nsut/web
           docker push registry.heroku.com/salary-predictor-nsut/web
