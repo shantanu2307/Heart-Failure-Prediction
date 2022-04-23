@@ -32,4 +32,6 @@ jobs:
           command: docker login --username=$HEROKU_LOGIN --password=$HEROKU_TOKEN registry.heroku.com 
             docker tag shantanu2307/devops_app registry.heroku.com/salary-predictor-nsut/web
             docker push registry.heroku.com/salary-predictor-nsut/web
-            heroku container:release web -a salary-predictor-nsut
+      - run :
+          name: Deploy to Heroku
+          command: heroku container:release web -a salary-predictor-nsut
