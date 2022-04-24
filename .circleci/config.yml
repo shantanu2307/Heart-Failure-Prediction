@@ -43,7 +43,7 @@ jobs:
 
      - run:
         name: Run tests
-        command: pytest --html=test_reports/report.html
+        command: python -m pytest --html=test_reports/report.html
      - store_test_results:
         path: test_reports
      - store_artifacts:
