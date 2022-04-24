@@ -15,14 +15,14 @@ workflows:
           filters:
             branches:
               only: main
-      - heroku/deploy-to-staging:
+      - heroku/deploy-via-git:
           app-name: $HEROKU_STAGING_APP_NAME
           requires:
             - build
           filters:
             branches:
               only: staging 
-      - heroku/deploy-to-dev:
+      - heroku/deploy-via-git:
           app-name: $HEROKU_DEV_APP_NAME
           requires:
             - build
