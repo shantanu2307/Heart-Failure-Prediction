@@ -8,14 +8,10 @@ workflows:
     jobs:
       - build
       - heroku/deploy-via-git:
-          jobs:
-            - run: |
-                echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-
-            - run: TAG="0.1.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}" && docker build -t shantanu2307/devops_app:$TAG . && docker push shantanu2307/devops_app:$TAG
           app-name: $HEROKU_PRODUCTION_APP_NAME
           requires:
             - build
+            - dockerise
           filters:
             branches:
               only: main
@@ -34,6 +30,13 @@ workflows:
             branches:
               only: dev
 jobs:
+ dockerise:
+   machine:
+     image: "ubuntu-2004:current"
+   steps:
+     - run: |
+          echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+     - run: TAG="0.1.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}" && docker build -t shantanu2307/devops_app:$TAG . && docker push shantanu2307/devops_app:$TAG
  build:
    machine:
     image: "ubuntu-2004:current"
