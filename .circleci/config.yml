@@ -49,7 +49,6 @@ jobs:
         args: pytest
         pkg-manager: pip
         pypi-cache: false
-        test-tool-args: '--html=test_reports/report.html'
 
      - store_test_results:
         path: test_reports
