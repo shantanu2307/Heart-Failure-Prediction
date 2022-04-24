@@ -43,20 +43,16 @@ jobs:
      - python/install-packages:
         pkg-manager: pip
      - python/install-packages:
-        pip-dependency-file: dev-requirements.txt
+        pip-dependency-file: requirements.txt
         pkg-manager: pip
      - python/install-packages:
         args: pytest
         pkg-manager: pip
         pypi-cache: false
+        test-tool-args: '--html=test_reports/report.html'
 
      - store_test_results:
         path: test_reports
      - store_artifacts:
         path: test_reports
         
-
-
-
-
-
