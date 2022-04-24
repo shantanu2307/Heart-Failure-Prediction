@@ -20,4 +20,4 @@ COPY ./ /app/
 EXPOSE 5000
 
 # Set run command
-CMD [ "python3", "application.py" ]
+CMD [ "python3", "app.py" ]
