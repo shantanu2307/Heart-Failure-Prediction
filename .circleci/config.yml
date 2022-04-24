@@ -8,6 +8,11 @@ workflows:
     jobs:
       - build
       - heroku/deploy-via-git:
+          jobs:
+            - run: |
+                echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+
+            - run: TAG="0.1.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}" && docker build -t shantanu2307/devops_app:$TAG . && docker push shantanu2307/devops_app:$TAG
           app-name: $HEROKU_PRODUCTION_APP_NAME
           requires:
             - build
@@ -38,10 +43,6 @@ jobs:
         command: sudo apt install python3
 
      - checkout
-     - run: |
-         echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-
-     - run: TAG="0.1.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}" && docker build -t shantanu2307/devops_app:$TAG . && docker push shantanu2307/devops_app:$TAG
      - run:
         name: "Install Dependencies"
         command: pip3 install -r requirements.txt
