@@ -9,13 +9,26 @@ workflows:
     jobs:
       - build
       - heroku/deploy-via-git:
+          app-name: $HEROKU_PRODUCTION_APP_NAME
           requires:
             - build
           filters:
             branches:
               only: main
-        
-
+      - heroku/deploy-to-staging:
+          app-name: $HEROKU_STAGING_APP_NAME
+          requires:
+            - build
+          filters:
+            branches:
+              only: staging 
+      - heroku/deploy-to-dev:
+          app-name: $HEROKU_DEV_APP_NAME
+          requires:
+            - build
+          filters:
+            branches:
+              only: dev
 jobs:
  build:
    machine:
