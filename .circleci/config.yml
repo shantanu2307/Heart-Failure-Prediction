@@ -8,6 +8,7 @@ workflows:
   heroku_deploy:
     jobs:
       - build
+      - test
       - heroku/deploy-via-git:
           app-name: $HEROKU_PRODUCTION_APP_NAME
           requires:
@@ -41,5 +42,15 @@ jobs:
 
      # build the application image
      - run: TAG="0.1.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}" && docker build -t shantanu2307/devops_app:$TAG . && docker push shantanu2307/devops_app:$TAG
+  test:
+    machine:
+      image: "ubuntu-2004:current"
+    steps:
+    - checkout
+    - run: pytest --html=test-reports/report.html
+    show-artifacts:
+      - test-reports/report.html
+
+
 
 
