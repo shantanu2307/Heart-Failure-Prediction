@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   heroku: circleci/heroku@1.2.6
-  python: circleci/python@2.0.3
 workflows:
   version: 2
   heroku_deploy:
@@ -43,12 +42,12 @@ jobs:
         #  echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
     #  - run: TAG="0.1.${CIRCLE_BUILD_NUM}-${CIRCLE_BRANCH}" && docker build -t shantanu2307/devops_app:$TAG . && docker push shantanu2307/devops_app:$TAG
-     - python/install-packages:
-        pip-dependency-file: requirements.txt
-        pkg-manager: pip
+     - run:
+        name: "Install Dependencies"
+        command: pip3 install -r requirements.txt
      - run:
         name: "Run tests"
-        command: pytest --html=test_reports/report.html
+        command: python3 -m pytest --html=test_reports/report.html
      - store_test_results:
         path: test_reports
      - store_artifacts:
