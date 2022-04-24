@@ -12,7 +12,6 @@ workflows:
           app-name: $HEROKU_PRODUCTION_APP_NAME
           requires:
             - build
-            - dockerise
           filters:
             branches:
               only: main
