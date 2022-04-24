@@ -43,7 +43,7 @@ jobs:
 
      - run:
         name: Run tests
-        command: python -m pytest --html=test_reports/report.html
+        command: pip install virtualenv && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && pytest --html=test_reports/report.html
      - store_test_results:
         path: test_reports
      - store_artifacts:
