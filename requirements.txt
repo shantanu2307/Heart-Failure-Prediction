@@ -7,5 +7,6 @@ Werkzeug
 Jinja2
 itsdangerous
 MarkupSafe
-
+pytest
+pytest-html
 

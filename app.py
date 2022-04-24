@@ -1,8 +1,9 @@
+from ast import In
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
 from sklearn.preprocessing import StandardScaler
-
+import json
 app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
 scaler = pickle.load(open('scaler.pkl', 'rb'))
@@ -31,12 +32,11 @@ def predict():
         
 @app.route('/predict_api',methods=['POST'])
 def results():
-
     data = request.get_json(force=True)
+    data=json.loads(data)
     prediction = model.predict([np.array(list(data.values()))])
-
     output = prediction[0]
-    return jsonify(output)
+    return json.dumps({'output':str(output)})
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
