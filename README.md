@@ -24,4 +24,9 @@ Accuracy of the model :75%
     -> git commit -m "Message"
     -> git push
 
+
+
+Made by: Shantanu Goyal (2019UCS2026), Sujal Goel (2019UCS2014), Anureet Kaur (2019UCS2037)
+
+
     
